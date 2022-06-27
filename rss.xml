@@ -10,9 +10,100 @@
         </author>
         <description>后端 CS 技术博客</description>
         <language>zh-CN</language>
-        <pubDate>Sat, 23 Apr 2022 10:46:33 +0800</pubDate>
-        <lastBuildDate>Sat, 23 Apr 2022 10:46:33 +0800</lastBuildDate>
+        <pubDate>Mon, 27 Jun 2022 17:19:23 +0800</pubDate>
+        <lastBuildDate>Mon, 27 Jun 2022 17:19:23 +0800</lastBuildDate>
         <category term="技术博客" />
+        <item>
+            <guid isPermalink="true">https://windlinxy.top/2022/06/27/7676f8186ee7/</guid>
+            <title>RabbitMQ学习_01</title>
+            <link>https://windlinxy.top/2022/06/27/7676f8186ee7/</link>
+            <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+            <category term="后端" scheme="https://windlinxy.top/tags/%E5%90%8E%E7%AB%AF/" />
+            <category term="消息队列" scheme="https://windlinxy.top/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" />
+            <pubDate>Mon, 27 Jun 2022 17:19:23 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;相关概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#相关概念&#34;&gt;#&lt;/a&gt; 相关概念&lt;/h1&gt;
+&lt;h2 id=&#34;什么是mq&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#什么是mq&#34;&gt;#&lt;/a&gt; 什么是 MQ&lt;/h2&gt;
+&lt;p&gt;message queue 消息的队列，本质上是队列，FIFO 先进先出，队列存放的内容是消息，还是一种跨进程的通信机制，用于上下游传递消息（比喻：QQ 上 A 发消息给 B，A 是上游，B 是下游），逻辑解耦和物理解耦，使用了 MQ 之后，消息发送上游只依赖 MQ，不需要依赖其他服务。&lt;/p&gt;
+&lt;h2 id=&#34;为什么要用mqmq三大特点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#为什么要用mqmq三大特点&#34;&gt;#&lt;/a&gt; 为什么要用 MQ？MQ 三大特点&lt;/h2&gt;
+&lt;h3 id=&#34;流量消峰&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#流量消峰&#34;&gt;#&lt;/a&gt; 流量消峰&lt;/h3&gt;
+&lt;p&gt;举例子：订单系统最多能处理一万次订单，这个处理能力应付正常时段的下单绰绰有余，正常我们下单一秒就能返回结果，但是在高峰期，如果两万次下单操作系统是处理不了的，只能限制订单超出一万次后不允许用户下单。而使用功能消息队列做缓冲，我们可以取消这个限制，把一秒内下的订单分散成一段时间来处理，这是有些用户可能在下单十几秒后才收到下单成功的操作，但是比不能下单的体验要好。&lt;/p&gt;
+&lt;h3 id=&#34;应用解耦&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#应用解耦&#34;&gt;#&lt;/a&gt; 应用解耦&lt;/h3&gt;
+&lt;p&gt;举例子：以电商应用为例，应用中有订单系统、库存系统、物流系统、支付系统、用户创建订单后，如果耦合调用库存系统，物流系统，支付系统，任何一个子系统出了故障，都会造成下单操作异常。当转变成基于消息队列的方式后，系统间调用的问题会少很多，比如物流系统发生了故障，需要几分钟来修复，在这几分钟的时间里，物流系统要处理的内存被缓存在消息队列里，用户下单操作可以正常完成。当物流系统恢复后，急需处理订单即可，用户感受不到物流系统的故障，提升系统的可用性。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/image-20220627152327281.png&#34; alt=&#34;image-20220627152327281&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;异步处理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#异步处理&#34;&gt;#&lt;/a&gt; 异步处理&lt;/h3&gt;
+&lt;p&gt;A 要调用 B，并且要时不时发消息询问 B 是否处理完毕。使用消息队列，A 调用 B 之后 A 干自己的事情，B 处理完成后发送处理完毕消息给消息队列，消息队列将消息发送给 A&lt;/p&gt;
+&lt;h2 id=&#34;mq的分类&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mq的分类&#34;&gt;#&lt;/a&gt; MQ 的分类&lt;/h2&gt;
+&lt;h3 id=&#34;activemq&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#activemq&#34;&gt;#&lt;/a&gt; ActiveMQ&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：单机吞吐量万级，时效性 ms 级，可用性高，基于主从架构实现高可用性，消息可靠性：较低概率丢失数据&lt;/li&gt;
+&lt;li&gt;缺点：官方社区维护越来越少，高吞吐量使用场景少&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;kafka&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#kafka&#34;&gt;#&lt;/a&gt; Kafka&lt;/h3&gt;
+&lt;p&gt;大数据杀手锏，谈到大数据领域内的消息传输，绕不开 Kafka，为大数据而生的消息中间件，百万级 TPS（服务器每秒处理事物数）吞吐量，在数据采集、传输、存储过程中发挥举足轻重的作用，目前已被 LinkedIn，Uber，Twitter，Netflix 等大公司所采纳&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：性能卓越，单机写入 TPS 约百万条 / 秒，吞吐量高，时效性 ms 级可用性非常高，kafka 是分布式的，一个数据多个副本，少数机器宕机不会丢失数据，不会导致不可用，消费者采用 pull 方式获取消息，消息有序，通过控制能够保证所有的消息被消费且仅被消费一次；有优秀的第三方 kafkaWeb 的管理界面 Kafka-Manager；在日志领域比较成熟，被多家公司和多个开源项目使用，功能支持较为简单，主要支持简单的 MQ 功能，在大数据领域的实时计算以及日志采集被大规模使用。&lt;/li&gt;
+&lt;li&gt;缺点：Kafka 单机超过 64 个队列 / 分区，Load 会发生明显的飙高现象，队列越多，load 越高，发送消息响应时间变长，使用短轮询方式，实时性取决于轮询间隔时间，消费失败不支持重试；支持消息顺序，但是有一台代理宕机后，会产生消息乱序，社区更新较慢&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;rocketmq&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rocketmq&#34;&gt;#&lt;/a&gt; RocketMQ&lt;/h3&gt;
+&lt;p&gt;出自阿里巴巴开源产品，用 Java 语言实现，在设计时参考了 kafka，并做出了一些改进，被阿里巴巴广泛应用在订单、交易、充值、流计算、消息推送、日志流氏处理、binglog 分发等场景&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优点： 单机吞吐量十万级，可用性非常高，分布式架构，消息可以做到 0 丢失，MQ 功能较为完善，还是分布式的，扩展性好，支持 10 亿级别的消息堆积，不会因为堆积导致性能下降，源码是 Java 我们可以自己阅读源码，定制自己公司的 MQ&lt;/li&gt;
+&lt;li&gt;缺点：支持的客户端语言不多，目前是 java 以及 C++，C++ 不成熟，社区活跃度一般，没有在 MQ 核心中区实现 JMS 等接口，有些系统要迁移需要修改大量代码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;rabbitmq&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rabbitmq&#34;&gt;#&lt;/a&gt; RabbitMQ&lt;/h3&gt;
+&lt;p&gt;2007 年发布，是一个在 AMQP（高级消息队列协议）基础上完成的，可复用的企业消息系统，是当前最主流的中间件之一。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：由于 erlang 语言的高并发特点，性能较好；吞吐量到万级，MQ 功能比较完备，健壮、稳定、易用、跨平台，支持多种语言：Python、Ruby、.NET、Java、JMS、C、PHP 等，支持 AJAX，文档齐全；开源提供的管理界面非常棒，用起来很好用，社区活跃度高，更新频率相当高&lt;/li&gt;
+&lt;li&gt;缺点：商业版收费，学习成本高。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;mq的选择&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mq的选择&#34;&gt;#&lt;/a&gt; MQ 的选择&lt;/h2&gt;
+&lt;h3 id=&#34;kafka-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#kafka-2&#34;&gt;#&lt;/a&gt; Kafka&lt;/h3&gt;
+&lt;p&gt;Kafka 适合产生大量数据的互联网服务的数据收集业务，大型公司，如果有日志采集，首选 Kafka&lt;/p&gt;
+&lt;h3 id=&#34;rocketmq-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rocketmq-2&#34;&gt;#&lt;/a&gt; RocketMQ&lt;/h3&gt;
+&lt;p&gt;适合金融互联网领域，对于可靠性要求很高的场景，业务上有并发的场景，建议可以选择&lt;/p&gt;
+&lt;h3 id=&#34;rabbitmq-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rabbitmq-2&#34;&gt;#&lt;/a&gt; RabbitMQ&lt;/h3&gt;
+&lt;p&gt;结合 erlang 语言本身的开发优势， 性能好时效性微妙级，社区活跃度，管理界面方便，数据量没那么大，中小型公司&lt;/p&gt;
+&lt;h1 id=&#34;rabbitmq-3&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rabbitmq-3&#34;&gt;#&lt;/a&gt; RabbitMQ&lt;/h1&gt;
+&lt;h2 id=&#34;rabbit概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rabbit概念&#34;&gt;#&lt;/a&gt; Rabbit 概念&lt;/h2&gt;
+&lt;p&gt;RabbitMQ 是一个消息中间件；它接受并转发消息，接受、存储和转发消息&lt;/p&gt;
+&lt;h2 id=&#34;rabbit核心概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rabbit核心概念&#34;&gt;#&lt;/a&gt; Rabbit 核心概念&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/image-20220627161810815.png&#34; alt=&#34;image-20220627161810815&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1-生产者&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1-生产者&#34;&gt;#&lt;/a&gt; 1. 生产者&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;产生数据发送消息的生产者&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;2-交换机&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2-交换机&#34;&gt;#&lt;/a&gt; 2. 交换机&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;交换机是 RabbitMQ 非常重要的一个部件，一方面它接受来自生产者的消息，另一方面它将消息推送到队列中，交换机必须确切知道如何处理它接受到的消息，是将这些消息推送到特定的队列还是推送到多个队列，亦或者是把消息丢弃，这个得有交换机类型决定&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;3-队列&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#3-队列&#34;&gt;#&lt;/a&gt; 3. 队列&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;队列是 RabbitMQ 内部使用的一个数据结构，尽管消息流经 RabbitMQ 和应用程序，但它们只能存储在队列中。队列仅受主机的内存和磁盘限制的约束，本质上是一个大的消息缓冲区，许多生产者可以将消息发送到一个队列，许多消费者可以尝试从一个队列接收数据，这就是我们使用队列的方式&lt;/p&gt;
+&lt;p&gt;交换机和队列可以一对多绑定&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;4-消费者&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#4-消费者&#34;&gt;#&lt;/a&gt; 4. 消费者&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;消费与接收具有相似的含义。消费者大多时候是一个等待接受消息的程序。请注意生产者，消费者和消息中间件很多时候并不在同意机器上。同一个应用程序既可以是生产者又可以是消费者&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;rabbit核心部分模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rabbit核心部分模式&#34;&gt;#&lt;/a&gt; Rabbit 核心部分（模式）&lt;/h2&gt;
+&lt;h3 id=&#34;holle-world简单模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#holle-world简单模式&#34;&gt;#&lt;/a&gt; &amp;quot;Holle World&amp;quot; 简单模式&lt;/h3&gt;
+&lt;h3 id=&#34;work-queues工作模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#work-queues工作模式&#34;&gt;#&lt;/a&gt; Work queues 工作模式&lt;/h3&gt;
+&lt;h3 id=&#34;publishsubscribe发布订阅模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#publishsubscribe发布订阅模式&#34;&gt;#&lt;/a&gt; Publish/Subscribe 发布 / 订阅模式&lt;/h3&gt;
+&lt;h3 id=&#34;routing路由模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#routing路由模式&#34;&gt;#&lt;/a&gt; Routing 路由模式&lt;/h3&gt;
+&lt;h3 id=&#34;topics主题模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#topics主题模式&#34;&gt;#&lt;/a&gt; Topics 主题模式&lt;/h3&gt;
+&lt;h3 id=&#34;publisher-confirms发布确认模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#publisher-confirms发布确认模式&#34;&gt;#&lt;/a&gt; Publisher Confirms 发布确认模式&lt;/h3&gt;
+&lt;h2 id=&#34;各个名词解释&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#各个名词解释&#34;&gt;#&lt;/a&gt; 各个名词解释&lt;/h2&gt;
+&lt;h3 id=&#34;rabbit工作原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#rabbit工作原理&#34;&gt;#&lt;/a&gt; Rabbit 工作原理&lt;/h3&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/image-20220627162630662.png&#34; alt=&#34;image-20220627162630662&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Broker&lt;/strong&gt;: 接收和分发消息的应用，RabbitMQ Server 就是 Message Broker，实质&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Virtual host&lt;/strong&gt;：出于多租户和安全因素设计的，把 AMQP 的基本组件划分到一个虚拟的分组中，类似于网络中的 namespace 概念。当多个不同的用户使用同一个 RabbitMQ server 提供的服务时，可以划分出 多个 vhost，每个用户在自己的 vhost 创建 exchange／queue 等&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Connection&lt;/strong&gt;：publisher／consumer 和 broker 之间的 TCP 连接&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Channel&lt;/strong&gt;：如果每一次访问 RabbitMQ 都建立一个 Connection，在消息量大的时候建立 TCP Connection 的开销将是巨大的，效率也较低。Channel 是在 connection 内部建立的逻辑连接，如果应用程 序支持多线程，通常每个 thread 创建单独的 channel 进行通讯，AMQP method 包含了 channel id 帮助客 户端和 message broker 识别 channel，所以 channel 之间是完全隔离的。Channel 作为轻量级的 Connection 极大减少了操作系统建立 TCP connection 的开销&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exchange&lt;/strong&gt;：message 到达 broker 的第一站，根据分发规则，匹配查询表中的 routing key，分发 消息到 queue 中去。常用的类型有：direct (point-to-point), topic (publish-subscribe) and fanout (multicast)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Queue&lt;/strong&gt;：消息最终被送到这里等待 consumer 取走&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Binding&lt;/strong&gt;：exchange 和 queue 之间的虚拟连接，binding 中可以包含 routing key，Binding 信息被保 存到 exchange 中的查询表中，用于 message 的分发依据&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://windlinxy.top/2022/04/23/f0d92c452e76/</guid>
             <title>开启音乐创作之旅</title>
