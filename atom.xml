@@ -8,8 +8,157 @@
     <author>
       <name>Windlinxy</name>
     </author>
-    <updated>2022-06-30T01:15:19.000Z</updated>
+    <updated>2022-07-30T07:45:05.000Z</updated>
     <category term="技术博客" />
+    <entry>
+        <id>https://windlinxy.top/2022/07/30/c89a82d024ee/</id>
+        <title>Android组件-Activity</title>
+        <link rel="alternate" href="https://windlinxy.top/2022/07/30/c89a82d024ee/"/>
+        <content type="html">&lt;h1 id=&#34;架构&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#架构&#34;&gt;#&lt;/a&gt; 架构&lt;/h1&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/12345678.png&#34; alt=&#34;12345678&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;基础知识&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#基础知识&#34;&gt;#&lt;/a&gt; 基础知识&lt;/h1&gt;
+&lt;h2 id=&#34;基础组件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#基础组件&#34;&gt;#&lt;/a&gt; 基础组件&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;界面组件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Activity&lt;/li&gt;
+&lt;li&gt;Fragment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;服务组件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;广播组件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;BroadcastReceiver&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;数据组件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ContentProvider&lt;/li&gt;
+&lt;li&gt;ContentResolver&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;activity&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#activity&#34;&gt;#&lt;/a&gt; Activity&lt;/h1&gt;
+&lt;p&gt;Activiey 是一个界面容器，主要用于展示界面和与用户交互&lt;/p&gt;
+&lt;h2 id=&#34;生命周期&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#生命周期&#34;&gt;#&lt;/a&gt; 生命周期：&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/image-20220730091914457.png&#34; alt=&#34;image-20220730091914457&#34; /&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight java&#34;&gt;&lt;figcaption data-lang=&#34;java&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;//Activity 创建，完成初始化操作&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token annotation punctuation&#34;&gt;@Override&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;protected&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onCreate&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token class-name&#34;&gt;Bundle&lt;/span&gt; savedInstanceState&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;onCreate&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;savedInstanceState&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token function&#34;&gt;setContentView&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token class-name&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;layout&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;activity_main&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;//        Log.v (TAG,&#34;Msg&#34;);//Verbose  观察值，Verbose 是冗长、啰嗦的意思，任何消息都会输出&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;//        Log.d (TAG,&#34;Msg&#34;);//Debug  调试&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;//        Log.i (TAG,&#34;Msg&#34;);//Info  信息，为一般提示性的消息&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;//        Log.w (TAG,&#34;Msg&#34;);//Warn  可能会出问题，一般用于系统提示开发者需要优化 android 代码等场景&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;//        Log.e (TAG,&#34;Msg&#34;);//Error  崩溃信息，一般用于输出异常和报错信息&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token class-name&#34;&gt;Log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;TAG&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;----onCreate----&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// Activity 在最新任务列表中打开时候会走此方法&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token annotation punctuation&#34;&gt;@Override&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;protected&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onRestart&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;onRestart&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token class-name&#34;&gt;Log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;TAG&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;----onRestart----&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;22&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// Activity 在 onCreate 或者 onRestart 之后执行&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;23&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token annotation punctuation&#34;&gt;@Override&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;24&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;protected&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onStart&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;25&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;onStart&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;26&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token class-name&#34;&gt;Log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;TAG&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;----onStart----&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;27&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;28&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;29&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// 正在与用户交互的界面，前台活动&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;30&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token annotation punctuation&#34;&gt;@Override&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;31&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;protected&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onResume&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;32&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;onResume&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;33&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token class-name&#34;&gt;Log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;TAG&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;----onResume----&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;34&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;35&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;36&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// 被其他与用户交互的 Activity 部分覆盖&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;37&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token annotation punctuation&#34;&gt;@Override&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;38&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;protected&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onPause&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;39&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;onPause&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;40&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token class-name&#34;&gt;Log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;TAG&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;----onPause----&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;41&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;42&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;43&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// 被其它与用户交互的 Activity 全部覆盖，可以做轻微重量级操作，如取消网络连接、注销广播接收器等&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;44&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token annotation punctuation&#34;&gt;@Override&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;45&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;protected&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onStop&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;46&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;onStop&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;47&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token class-name&#34;&gt;Log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;TAG&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;----onStop----&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;48&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;49&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;50&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// Activity 销毁时候调用此方法，释放资源&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;51&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token annotation punctuation&#34;&gt;@Override&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;52&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;protected&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onDestroy&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;53&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;onDestroy&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;54&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token class-name&#34;&gt;Log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;TAG&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;----onDestroy----&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;55&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;几种情况：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;打开页面： &lt;code&gt;onCreate()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume() &lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;关闭页面：Resumed -&amp;gt; &lt;code&gt;onPause()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStep() &lt;/code&gt; -&amp;gt;  &lt;code&gt;onDestroy()&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;后台回收：销毁不会有时机处理，重建： &lt;code&gt;onStart()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onRestoreInstanceState()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume()&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;部分遮挡：Resumed -&amp;gt; &lt;code&gt;onPause()&lt;/code&gt;  遮挡恢复 -&amp;gt;  &lt;code&gt;onResume()&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;页面全遮挡：Resumed -&amp;gt; &lt;code&gt;onStop()&lt;/code&gt;  遮挡恢复： &lt;code&gt;onRestart()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume()&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置改变重建 Activity：Resumed -&amp;gt;  &lt;code&gt;onSaveInstanceState()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onPause()&lt;/code&gt;  - &amp;gt; &lt;code&gt;onStop()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onDestroy()&lt;/code&gt;  -  &lt;code&gt;onCteate()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onRestoreInstanceState()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume()&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;配置改变不重建 Activity&lt;/strong&gt;：AndroidMainfest 配置 Activity 节点的 configChange 属性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;local：语言改变&lt;/li&gt;
+&lt;li&gt;fontSize：字体大小改变&lt;/li&gt;
+&lt;li&gt;orientation：旋转屏幕&lt;/li&gt;
+&lt;li&gt;keybordHidden：键盘显示隐藏&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;配置改变：onConfigurationChanged ()&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Activity 四个状态：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;运行状态：Activity 处于返回栈栈顶，此时最不可能被回收&lt;/li&gt;
+&lt;li&gt;暂停状态；不再处于任务栈栈顶，系统不会轻易回收&lt;/li&gt;
+&lt;li&gt;停止状态：不在栈顶且不可见，&lt;strong&gt;内存低时系统会回收&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;销毁状态：不在栈内，系统自动回收&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;启动模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#启动模式&#34;&gt;#&lt;/a&gt; 启动模式&lt;/h2&gt;
+&lt;p&gt;参考：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNzgxNDg2ODIxMzg5&#34;&gt;https://juejin.cn/post/6844903781486821389&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;首先了解任务和返回堆栈：&lt;/strong&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9kZXZlbG9wZXIuYW5kcm9pZC5nb29nbGUuY24vZ3VpZGUvY29tcG9uZW50cy9hY3Rpdml0aWVzL3Rhc2tzLWFuZC1iYWNrLXN0YWNrP2hsPXpoLWNu&#34;&gt;官方文档&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;用户在执行某项工作时与之互动的一系列 Activity 集合，这些 Activity 按照每个 Activity 打开的顺序排列在一个返回堆栈里。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Standard 默认启动模式&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不设置 launchMode 属性默认是 Standard 启动模式，该模式的 Activity 启动就会在同一个任务栈创建一个新的实例，栈内可以存在多个实例。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;例子：任务栈 A-B-C (C 是栈顶)，如果 C 去启动一个 A，那么会重新创建一个实例 A，即最终结果为 A-B-C-A，这时我们返回的时候（按下返回键）顺序依次是 A-C-B-A&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;从 C 跳转到 A: &lt;code&gt;onPause-C&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onCreate-A&lt;/code&gt;  -&amp;gt; &lt;code&gt;onStart-A&lt;/code&gt;  -&amp;gt; &lt;code&gt;onResume-A&lt;/code&gt; -&amp;gt; &lt;code&gt;onStop-C&lt;/code&gt; -&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;从 A 回退到 C: &lt;code&gt;onPause-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onRestart-C&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart-C&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume-C&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStop-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onDestroy-A&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;home 或锁屏： &lt;code&gt;Resumed&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onPause&lt;/code&gt;  -&amp;gt; &lt;code&gt; onStop&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;home 回到 App： &lt;code&gt;onStop&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onRestart&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResunme&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SingleTask 栈内复用启动模式&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;启动已在任务栈中的 Activity，则复用已经存在的 Activity 实例，调用该实例的 &lt;code&gt;onNewInstant()&lt;/code&gt;  方法，若该实例不在栈顶，则将实例提到栈顶，在被调用的实例之上的实例出栈（销毁），如果实例不存在则创建一个实例加入当前栈&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;常用于 APP 入口点&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A 在栈顶：A 启动 A： &lt;code&gt;onPause()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onNewIntent &lt;/code&gt; ()-&amp;gt;  &lt;code&gt;onResume&lt;/code&gt; ()&lt;/li&gt;
+&lt;li&gt;不在栈顶：
+&lt;ul&gt;
+&lt;li&gt;A-&amp;gt;B B 启动 A： &lt;code&gt;Resumed-B&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onPause-B&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onNewIntent-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onRestart-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStop-B&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onDestroy-B&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;A -&amp;gt;B-&amp;gt;C C 启动 A:  &lt;code&gt;Resumed-C&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onDestroy-B&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onPause-C &lt;/code&gt; -&amp;gt;  &lt;code&gt;onNewIntent-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onRestart-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStop-C&lt;/code&gt; - &amp;gt;  &lt;code&gt;onDestroy-C&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SingleTop 栈顶复用启动模式&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;若调用的实例位于栈顶，则复用，调用 &lt;code&gt;onNewTntent()&lt;/code&gt;  否则创建新的实例（类似于 Standard）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A 在栈顶，启动 A： &lt;code&gt;onPause()&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onNewIntent &lt;/code&gt; ()-&amp;gt;  &lt;code&gt;onResume&lt;/code&gt; ()&lt;/li&gt;
+&lt;li&gt;A 不在栈顶：
+&lt;ul&gt;
+&lt;li&gt;A-&amp;gt;B，B 启动 A 后，A-&amp;gt;B-&amp;gt;A： &lt;code&gt;Resumed-B&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onPause-B&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onCreate-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStop-B&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;A-&amp;gt;B-&amp;gt;C，C 启动 A，A-&amp;gt;B-&amp;gt;C-&amp;gt; &lt;code&gt;Resumed-C&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onPause-C&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onCreate-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onStart-A&lt;/code&gt;  -&amp;gt;  &lt;code&gt;onResume-A &lt;/code&gt; -&amp;gt;  &lt;code&gt;onStop-C&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SingleInstance 单例启动模式&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;全局单例，启动比较慢，切换效果不好，影响用户体验，用的不多，次启动模式的实例单独一个栈&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+        <category term="安卓" scheme="https://windlinxy.top/tags/%E5%AE%89%E5%8D%93/" />
+        <updated>2022-07-30T07:45:05.000Z</updated>
+    </entry>
     <entry>
         <id>https://windlinxy.top/2022/06/30/0819f472bf45/</id>
         <title>RabbitMQ学习_02</title>
@@ -78,6 +227,9 @@
 &lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/image-20220630091648283.png&#34; alt=&#34;image-20220630091648283&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/image-20220630091704270.png&#34; alt=&#34;image-20220630091704270&#34; /&gt;&lt;/p&gt;
 </content>
+        <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+        <category term="后端" scheme="https://windlinxy.top/tags/%E5%90%8E%E7%AB%AF/" />
+        <category term="消息队列" scheme="https://windlinxy.top/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" />
         <updated>2022-06-30T01:15:19.000Z</updated>
     </entry>
     <entry>
@@ -2532,8 +2684,8 @@ SSH 通过在网络中建立 安全隧道 （英语：secure channel） 来实�
 </content>
         <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
         <category term="工具" scheme="https://windlinxy.top/tags/%E5%B7%A5%E5%85%B7/" />
-        <category term="Git" scheme="https://windlinxy.top/tags/Git/" />
         <category term="后端" scheme="https://windlinxy.top/tags/%E5%90%8E%E7%AB%AF/" />
+        <category term="Git" scheme="https://windlinxy.top/tags/Git/" />
         <updated>2021-08-22T07:44:01.000Z</updated>
     </entry>
     <entry>
