@@ -10,16 +10,56 @@
         </author>
         <description>后端 CS 技术博客</description>
         <language>zh-CN</language>
-        <pubDate>Wed, 16 Nov 2022 15:53:18 +0800</pubDate>
-        <lastBuildDate>Wed, 16 Nov 2022 15:53:18 +0800</lastBuildDate>
+        <pubDate>Thu, 17 Nov 2022 17:51:34 +0800</pubDate>
+        <lastBuildDate>Thu, 17 Nov 2022 17:51:34 +0800</lastBuildDate>
         <category term="技术博客" />
+        <item>
+            <guid isPermalink="true">https://windlinxy.top/2022/11/17/b3e52ceaa79f/</guid>
+            <title>NIO的一些问题</title>
+            <link>https://windlinxy.top/2022/11/17/b3e52ceaa79f/</link>
+            <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+            <category term="Java" scheme="https://windlinxy.top/tags/Java/" />
+            <pubDate>Thu, 17 Nov 2022 17:51:34 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;nio存在的问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#nio存在的问题&#34;&gt;#&lt;/a&gt; NIO 存在的问题&lt;/h1&gt;
+&lt;p&gt;在 NIO 中，若&lt;strong&gt; Selecto&lt;/strong&gt;r 的轮询结果为空，也没有 &lt;code&gt;wakeup()&lt;/code&gt;  或新消息处理，会发生空轮询导致 CPU 占用 100%。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;前置知识：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;JDK1.5 引入 &lt;code&gt;epoll&lt;/code&gt;  机制。 &lt;code&gt;epoll&lt;/code&gt;  是 linux2.6 内核的系统调用，设计目的就是替代 select、poll 线性复杂度的模型， &lt;code&gt;epoll&lt;/code&gt;  的时间复杂度是 O (1)。 &lt;code&gt;epoll&lt;/code&gt;  在高并发场景表现优秀。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;文件描述符 (File Descriptor——fd)&lt;/strong&gt;：linux 内核利用文件描述符来访问文件，打开显存文件或新建文件时，内核会返回一个文件描述符。读写文件也需要使用文件描述符来指定待读写的文件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;文件句柄&lt;/strong&gt;：Windows 下的概念，句柄是各种对象的标识符，它是一个非负整数，也用于定位文件数据在内存中的位置。&lt;/p&gt;
+&lt;p&gt;linux 下的文件描述符其实就相当于 windows 下的句柄。文件句柄只是 windows 众多句柄中的一种类型而已。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对于操作系统会有这样一个需求：如何在一个进程（线程）中处理多个文件，或者监听多个文件的 IO 事件。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;select&lt;/code&gt; 、 &lt;code&gt;poll&lt;/code&gt;  和 &lt;code&gt;epoll&lt;/code&gt;  都是操作系统中实现 IO 多路复用的方法。&lt;/p&gt;
+&lt;h2 id=&#34;select&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#select&#34;&gt;#&lt;/a&gt; select&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;select&lt;/code&gt;  方法本质就是维护了一个文件描述符数组（32 位系统 MAX=1024,64 位 MAX=2048），依次实现 IO 多路复用，select 会监视文件描述符的变化。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;select()&lt;/code&gt;  机制中提供了 &lt;code&gt;fd_set&lt;/code&gt;  数据结构，实际上是一个 long 类型的数组，每个数组元素都能与以打开的文件描述符建立联系。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/proc/sys/fs/file-max&lt;/code&gt;  中&lt;strong&gt;指定了系统范围内所有进程可打开的文件的数量限制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当 &lt;code&gt;select&lt;/code&gt;  方法被调用，首先需要将 &lt;code&gt;fd_set&lt;/code&gt;  从用户空间拷贝到内核空间，然后内核用 &lt;code&gt;poll&lt;/code&gt;  机制（非多路复用的 poll）返回一个 fd 准备就绪个数。方法返回后需要轮询 &lt;code&gt;fd_set&lt;/code&gt; ，检查发生 IO 事件的 fd。&lt;/p&gt;
+&lt;p&gt;缺陷：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用轮询，效率低。&lt;/li&gt;
+&lt;li&gt;会导致用户空间和内核空间频繁拷贝数据。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;poll&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#poll&#34;&gt;#&lt;/a&gt; poll&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;poll&lt;/code&gt;  和 &lt;code&gt;select&lt;/code&gt;  很类似，只不过 &lt;code&gt;poll&lt;/code&gt;  维护的是一个链表，单个进程监听的 fd 不再有数量限制，但是和 &lt;code&gt;select&lt;/code&gt;  相同的轮询和复制问题依然存在。&lt;/p&gt;
+&lt;h2 id=&#34;epoll&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#epoll&#34;&gt;#&lt;/a&gt; epoll&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;epoll 全称 EventPoll，是 linux 内核实现 IO 多路复用的模型。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 Linux 中， &lt;code&gt;selector&lt;/code&gt;  和 &lt;code&gt;poll&lt;/code&gt;  监听文件描述符 list，进行线性的查找，复杂度 O (1)。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;epoll&lt;/code&gt;  使用了内核文件级别的回调机制，复杂度 O (1)。&lt;/p&gt;
+&lt;p&gt;epoll 基于事件驱动，给每个 fd 注册一个回调函数，当对应的 fd 有 IO 事件发生时就调用这个回调函数，将这个 fd 放入一个链表中，这样客户端可以直接从链表中获得发生 IO 事件的 fd，从而达到 O (1) 级别的监听。&lt;/p&gt;
+&lt;p&gt;epoll 有的三个系统调用：&lt;em&gt;epoll_create&lt;/em&gt;, &lt;em&gt;epoll_ctl&lt;/em&gt;, &lt;em&gt;epoll_wait&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;jdk中epoll的实现&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#jdk中epoll的实现&#34;&gt;#&lt;/a&gt; JDK 中 epoll 的实现&lt;/h2&gt;
+&lt;p&gt;理论上无客户端连接时 &lt;code&gt;Selector.select()&lt;/code&gt;  方法会阻塞，&lt;strong&gt;但空轮询 bug 导致：即使无客户端连接，NIO 照样不断的从 select 本应该阻塞的 &lt;code&gt;Selector.select()&lt;/code&gt;  中 wake up 出来，导致 CPU100% 问题。&lt;/strong&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://windlinxy.top/2022/11/16/454b13fb3048/</guid>
             <title>IO模型</title>
             <link>https://windlinxy.top/2022/11/16/454b13fb3048/</link>
             <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
             <category term="后端" scheme="https://windlinxy.top/tags/%E5%90%8E%E7%AB%AF/" />
-            <category term="JAVA IO" scheme="https://windlinxy.top/tags/JAVA-IO/" />
+            <category term="Java" scheme="https://windlinxy.top/tags/Java/" />
             <pubDate>Wed, 16 Nov 2022 15:53:18 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;java-io模型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#java-io模型&#34;&gt;#&lt;/a&gt; JAVA IO 模型&lt;/h1&gt;
 &lt;h2 id=&#34;bio&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#bio&#34;&gt;#&lt;/a&gt; BIO&lt;/h2&gt;

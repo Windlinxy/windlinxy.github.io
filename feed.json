@@ -7,6 +7,17 @@
     "home_page_url": "https://windlinxy.top",
     "items": [
         {
+            "id": "https://windlinxy.top/2022/11/17/b3e52ceaa79f/",
+            "url": "https://windlinxy.top/2022/11/17/b3e52ceaa79f/",
+            "title": "NIO的一些问题",
+            "date_published": "2022-11-17T09:51:34.000Z",
+            "content_html": "<h1 id=\"nio存在的问题\"><a class=\"anchor\" href=\"#nio存在的问题\">#</a> NIO 存在的问题</h1>\n<p>在 NIO 中，若<strong> Selecto</strong>r 的轮询结果为空，也没有 <code>wakeup()</code>  或新消息处理，会发生空轮询导致 CPU 占用 100%。</p>\n<p><strong>前置知识：</strong></p>\n<p>JDK1.5 引入 <code>epoll</code>  机制。 <code>epoll</code>  是 linux2.6 内核的系统调用，设计目的就是替代 select、poll 线性复杂度的模型， <code>epoll</code>  的时间复杂度是 O (1)。 <code>epoll</code>  在高并发场景表现优秀。</p>\n<p><strong>文件描述符 (File Descriptor——fd)</strong>：linux 内核利用文件描述符来访问文件，打开显存文件或新建文件时，内核会返回一个文件描述符。读写文件也需要使用文件描述符来指定待读写的文件。</p>\n<p><strong>文件句柄</strong>：Windows 下的概念，句柄是各种对象的标识符，它是一个非负整数，也用于定位文件数据在内存中的位置。</p>\n<p>linux 下的文件描述符其实就相当于 windows 下的句柄。文件句柄只是 windows 众多句柄中的一种类型而已。</p>\n<p><strong>对于操作系统会有这样一个需求：如何在一个进程（线程）中处理多个文件，或者监听多个文件的 IO 事件。</strong></p>\n<p><code>select</code> 、 <code>poll</code>  和 <code>epoll</code>  都是操作系统中实现 IO 多路复用的方法。</p>\n<h2 id=\"select\"><a class=\"anchor\" href=\"#select\">#</a> select</h2>\n<p><code>select</code>  方法本质就是维护了一个文件描述符数组（32 位系统 MAX=1024,64 位 MAX=2048），依次实现 IO 多路复用，select 会监视文件描述符的变化。</p>\n<p><code>select()</code>  机制中提供了 <code>fd_set</code>  数据结构，实际上是一个 long 类型的数组，每个数组元素都能与以打开的文件描述符建立联系。</p>\n<p><code>/proc/sys/fs/file-max</code>  中<strong>指定了系统范围内所有进程可打开的文件的数量限制</strong></p>\n<p>当 <code>select</code>  方法被调用，首先需要将 <code>fd_set</code>  从用户空间拷贝到内核空间，然后内核用 <code>poll</code>  机制（非多路复用的 poll）返回一个 fd 准备就绪个数。方法返回后需要轮询 <code>fd_set</code> ，检查发生 IO 事件的 fd。</p>\n<p>缺陷：</p>\n<ul>\n<li>使用轮询，效率低。</li>\n<li>会导致用户空间和内核空间频繁拷贝数据。</li>\n</ul>\n<h2 id=\"poll\"><a class=\"anchor\" href=\"#poll\">#</a> poll</h2>\n<p><code>poll</code>  和 <code>select</code>  很类似，只不过 <code>poll</code>  维护的是一个链表，单个进程监听的 fd 不再有数量限制，但是和 <code>select</code>  相同的轮询和复制问题依然存在。</p>\n<h2 id=\"epoll\"><a class=\"anchor\" href=\"#epoll\">#</a> epoll</h2>\n<blockquote>\n<p>epoll 全称 EventPoll，是 linux 内核实现 IO 多路复用的模型。</p>\n</blockquote>\n<p>在 Linux 中， <code>selector</code>  和 <code>poll</code>  监听文件描述符 list，进行线性的查找，复杂度 O (1)。</p>\n<p><code>epoll</code>  使用了内核文件级别的回调机制，复杂度 O (1)。</p>\n<p>epoll 基于事件驱动，给每个 fd 注册一个回调函数，当对应的 fd 有 IO 事件发生时就调用这个回调函数，将这个 fd 放入一个链表中，这样客户端可以直接从链表中获得发生 IO 事件的 fd，从而达到 O (1) 级别的监听。</p>\n<p>epoll 有的三个系统调用：<em>epoll_create</em>, <em>epoll_ctl</em>, <em>epoll_wait</em></p>\n<h2 id=\"jdk中epoll的实现\"><a class=\"anchor\" href=\"#jdk中epoll的实现\">#</a> JDK 中 epoll 的实现</h2>\n<p>理论上无客户端连接时 <code>Selector.select()</code>  方法会阻塞，<strong>但空轮询 bug 导致：即使无客户端连接，NIO 照样不断的从 select 本应该阻塞的 <code>Selector.select()</code>  中 wake up 出来，导致 CPU100% 问题。</strong></p>\n",
+            "tags": [
+                "学习笔记",
+                "Java"
+            ]
+        },
+        {
             "id": "https://windlinxy.top/2022/11/16/454b13fb3048/",
             "url": "https://windlinxy.top/2022/11/16/454b13fb3048/",
             "title": "IO模型",
@@ -15,7 +26,7 @@
             "tags": [
                 "学习笔记",
                 "后端",
-                "JAVA IO"
+                "Java"
             ]
         },
         {
