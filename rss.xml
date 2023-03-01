@@ -2284,6 +2284,9 @@ LinkedList 使用链表形式存储；&lt;/p&gt;
 &lt;p&gt;最近收到阿里云的短信，说我域名不合格：&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/Windlinxy/Typora-img/main/img/image-20220605150422528.png&#34; alt=&#34;image-20220605150422528&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;下了跳，原来是因为域名与 github 的页面绑定，没有接入阿里的节点（因为都是走 github 的），找了一下解决方法发现，原来域名解析设置一个二级域名绑到自己服务器 ip 上，定时访问一下就行。&lt;/p&gt;
+&lt;h2 id=&#34;2022-1-20&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2022-1-20&#34;&gt;#&lt;/a&gt; 2022-1-20&lt;/h2&gt;
+&lt;p&gt;微博的图床挂掉了，现在用路过图床，图片文件可能太大了，第一次导致加载有些卡顿。&lt;/p&gt;
+&lt;p&gt;文章中的图片是用的 typora+PicGo+github 搭的，无法加载可能需要魔法才能访问流畅。&lt;/p&gt;
  ]]></description>
         </item>
         <item>
