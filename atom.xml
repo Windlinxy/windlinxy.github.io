@@ -12,7 +12,7 @@
     <category term="技术博客" />
     <entry>
         <id>https://windlinxy.top/2023/03/05/53da95311ccb/</id>
-        <title>3月2日LeetCode刷题</title>
+        <title>LeetCode刷题-LRU</title>
         <link rel="alternate" href="https://windlinxy.top/2023/03/05/53da95311ccb/"/>
         <content type="html">&lt;h2 id=&#34;lru缓存&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#lru缓存&#34;&gt;#&lt;/a&gt; LRU 缓存&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9sZWV0Y29kZS5jbi9wcm9ibGVtcy9scnUtY2FjaGUv&#34;&gt;146.LRU 缓存&lt;/span&gt;&lt;/p&gt;
