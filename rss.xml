@@ -49,8 +49,8 @@ export PATH=/home/Android/Sdk/platform-tools:$&amp;#123;PATH&amp;#125;
             <title>Git常用</title>
             <link>https://windlinxy.top/2023/08/17/625794741ec0/</link>
             <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
-            <category term="工具" scheme="https://windlinxy.top/tags/%E5%B7%A5%E5%85%B7/" />
             <category term="后端" scheme="https://windlinxy.top/tags/%E5%90%8E%E7%AB%AF/" />
+            <category term="工具" scheme="https://windlinxy.top/tags/%E5%B7%A5%E5%85%B7/" />
             <category term="Git" scheme="https://windlinxy.top/tags/Git/" />
             <pubDate>Thu, 17 Aug 2023 22:55:09 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2dlZWVlZWVlZWVrL2dpdC1yZWNpcGVzL3RyZWUvbWFzdGVyL3NvdXJjZXM=&#34;&gt;Git 指南&lt;/span&gt;&lt;/p&gt;
@@ -1992,8 +1992,8 @@ export PATH=/home/Android/Sdk/platform-tools:$&amp;#123;PATH&amp;#125;
             <link>https://windlinxy.top/2022/04/20/be5fe109faf5/</link>
             <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
             <category term="Java" scheme="https://windlinxy.top/tags/Java/" />
-            <category term="JDK8" scheme="https://windlinxy.top/tags/JDK8/" />
             <category term="函数式编程" scheme="https://windlinxy.top/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" />
+            <category term="JDK8" scheme="https://windlinxy.top/tags/JDK8/" />
             <pubDate>Wed, 20 Apr 2022 08:48:07 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;函数式接口&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#函数式接口&#34;&gt;#&lt;/a&gt; 函数式接口&lt;/h1&gt;
 &lt;h2 id=&#34;概述&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概述&#34;&gt;#&lt;/a&gt; 概述&lt;/h2&gt;

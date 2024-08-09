@@ -86,8 +86,8 @@ export PATH=/home/Android/Sdk/platform-tools:$&amp;#123;PATH&amp;#125;
 &lt;p&gt;使用 commit --amend 追加前面提交的时候，gerrit 通过 changeId 来判断，从而使得 push 的时候可以追加到之前的提交，只是在远程加了 patchsetN&lt;/p&gt;
 </content>
         <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
-        <category term="工具" scheme="https://windlinxy.top/tags/%E5%B7%A5%E5%85%B7/" />
         <category term="后端" scheme="https://windlinxy.top/tags/%E5%90%8E%E7%AB%AF/" />
+        <category term="工具" scheme="https://windlinxy.top/tags/%E5%B7%A5%E5%85%B7/" />
         <category term="Git" scheme="https://windlinxy.top/tags/Git/" />
         <updated>2023-08-17T14:55:09.000Z</updated>
     </entry>
@@ -2072,8 +2072,8 @@ export PATH=/home/Android/Sdk/platform-tools:$&amp;#123;PATH&amp;#125;
 </content>
         <category term="学习笔记" scheme="https://windlinxy.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
         <category term="Java" scheme="https://windlinxy.top/tags/Java/" />
-        <category term="JDK8" scheme="https://windlinxy.top/tags/JDK8/" />
         <category term="函数式编程" scheme="https://windlinxy.top/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" />
+        <category term="JDK8" scheme="https://windlinxy.top/tags/JDK8/" />
         <updated>2022-04-20T00:48:07.000Z</updated>
     </entry>
 </feed>
